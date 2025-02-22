@@ -3,33 +3,40 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"os"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // Driver MySQL
 )
 
-func connectMySQL() (*sql.DB, error) {
-	// variáveis de ambiente
-	user := os.Getenv("DB_USER")
-	password := os.Getenv("DB_PASSWORD")
-	host := os.Getenv("DB_HOST")
-	port := os.Getenv("DB_PORT")
-	database := os.Getenv("DB_NAME")
+var db *sql.DB
 
-	// create string connection
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", user, password, host, port, database)
+// InitDB inicializa a conexão com o MySQL
+func InitDB() {
+	var err error
 
-	// open connection with SQL
-	db, err := sql.Open("mysql", dsn)
+	// Pegando a string de conexão do ambiente
+	dsn := os.Getenv("DB_DSN") // Exemplo: "user:password@tcp(localhost:3306)/database"
+	if dsn == "" {
+		log.Fatal("DB_DSN não configurado")
+	}
+
+	// Abrindo a conexão
+	db, err = sql.Open("mysql", dsn)
 	if err != nil {
-		return nil, err
+		log.Fatalf("Erro ao conectar no banco de dados: %v", err)
 	}
 
-	if err := db.Ping(); err != nil {
-		db.Close()
-		return nil, err
+	// Verifica a conexão
+	err = db.Ping()
+	if err != nil {
+		log.Fatalf("Banco de dados inacessível: %v", err)
 	}
 
-	fmt.Println("Connection SQL database with success")
-	return db, err
+	fmt.Println("Conectado ao banco de dados com sucesso!")
+}
+
+// GetDB retorna a instância do banco de dados
+func GetDB() *sql.DB {
+	return db
 }

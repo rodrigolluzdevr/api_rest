@@ -4,12 +4,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Server() {
+func SetupRoutes() *gin.Engine {
 	router := gin.Default()
-	router.GET("/get/events", getEvents)
-	router.GET("/get/user", getUser)
-	router.POST("/post/events", postEvents)
-	router.POST("/post/user", postUser)
 
-	router.Run()
+	// Add routes
+	EventRoutes(router)
+
+	//return function
+	return router
 }
