@@ -17,12 +17,14 @@ func CreateEvent(context *gin.Context) {
 		return
 	}
 
+	// implemented the create services logic
 	eventService := services.NewEventService()
 	if err := eventService.CreateEvent(&event); err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create event"})
 		return
 	}
 
+	// event created success
 	context.JSON(http.StatusOK, gin.H{"message": "Event created successfully", "event": event})
 }
 
