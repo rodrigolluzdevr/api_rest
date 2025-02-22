@@ -1,0 +1,51 @@
+# Compilados binários e arquivos temporários
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Cache do Go Modules
+/go/pkg/mod/
+/go/bin/
+/go/pkg/
+
+# Arquivos de dependências
+go.work
+go.work.sum
+go.sum
+
+# Logs e dumps
+*.log
+*.log.*
+*.pid
+*.seed
+*.csv
+*.db
+*.sqlite
+*.sqlite3
+dump.rdb
+*.lock
+
+# Configuração do banco de dados local
+*.db-journal
+
+# Arquivos do editor (VSCode, JetBrains, etc.)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos específicos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de ambiente e credenciais
+.env
+.env.local
+.env.*.local
+
+# Pasta vendor (caso use `go mod vendor`)
+# vendor/
